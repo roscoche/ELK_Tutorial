@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+echo "Node 1: Kibana and Logstash"
 echo "Making default ELK directory, downloading, extracting and renaming the folders"
 mkdir /elk
 cd /elk
@@ -16,17 +16,19 @@ rm *.zip *.gz
 echo "Downloading configuration files..."
 wget https://raw.githubusercontent.com/roscoche/ELK_tutorial/master/install_scripts/config_files/kibana.yml /elk/kibana/config/
 wget https://raw.githubusercontent.com/roscoche/ELK_tutorial/master/install_scripts/config_files/logstash.yml /elk/logstash/config/
-wget https://raw.githubusercontent.com/roscoche/ELK_tutorial/master/install_scripts/config_files/logstash.yml /elk/logstash/config/
+
+echo "Downloading logstash parsers..."
+wget https://raw.githubusercontent.com/roscoche/ELK_tutorial/master/examples/apache.conf /elk/logstash/
+wget https://raw.githubusercontent.com/roscoche/ELK_tutorial/master/examples/default.conf /elk/logstash/
 
 echo "Downloading service script..."
 sudo wget https://raw.githubusercontent.com/roscoche/ELK_tutorial/master/install_scripts/services/kibana /etc/init.d/
-sudo wget https://raw.githubusercontent.com/roscoche/ELK_tutorial/master/install_scripts/services/logstash /etc/init.d/
+echo "Configuring service..."
+chmod 700 /etc/init.d/kibana
+update-rc.d kibana defaults
+update-rc.d kibana enable
 sudo initctl reload-configuration
-sudo service logstash start
 sudo service kibana start
 
+echo "Node 3 Done. bye!"
 logout
-
-
-
-
