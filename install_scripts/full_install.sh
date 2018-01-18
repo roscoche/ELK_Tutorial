@@ -28,6 +28,7 @@ ssh-keyscan -H $LOGSTASH_IP >> ~/.ssh/known_hosts
 ssh-keyscan -H $KIBANA_IP >> ~/.ssh/known_hosts
 
 echo "Copying ElasticSearch ID to other nodes"
+sudo apt-get install sshpass -y -q
 sshpass -p "hpccdemo" ssh-copy-id $LOGSTASH_IP
 sshpass -p "hpccdemo" ssh-copy-id $KIBANA_IP
 
@@ -64,9 +65,9 @@ mkdir /elk/logstash
 mkdir /elk/samples
 
 echo "Downloading ELK..."
-#wget -v $ELASTICSEARCH_SRC -O $ELASTICSEARCH_FILE
-#wget -v $LOGSTASH_SRC -O $LOGSTASH_FILE
-#wget -v $KIBANA_SRC -O $KIBANA_FILE
+wget -v $ELASTICSEARCH_SRC -O $ELASTICSEARCH_FILE
+wget -v $LOGSTASH_SRC -O $LOGSTASH_FILE
+wget -v $KIBANA_SRC -O $KIBANA_FILE
 
 echo "Extracting Elasticsearch and Logstash..."
 tar -xzf $ELASTICSEARCH_FILE -C /elk/elasticsearch --strip-components 1
